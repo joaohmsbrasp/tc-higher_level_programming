@@ -6,4 +6,3 @@ def filtering_data(a_dictionary):
             filter(lambda x: x['salary'] > 10000, a_dictionary)
         )
     )
-    
