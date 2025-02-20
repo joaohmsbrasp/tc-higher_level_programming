@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from functools import reduce
 def calc_average(a_dictionary):
     """
     Calcula e imprime a média dos valores das chaves 'age' e 'salary' em um dicionário.
