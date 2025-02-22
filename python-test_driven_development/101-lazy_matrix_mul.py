@@ -2,46 +2,52 @@
 """Defines a matrix multiplication function using NumPy."""
 import numpy as np
 
-
 def lazy_matrix_mul(m_a, m_b):
-    """Return the multiplication of two matrices.
+    """Multiply two matrices using NumPy, with strict validation.
+    
     Args:
         m_a (list of lists of ints/floats): The first matrix.
         m_b (list of lists of ints/floats): The second matrix.
+    
+    Returns:
+        list: The result of multiplying m_a by m_b.
+    
+    Raises:
+        TypeError: If m_a or m_b are None.
+        ValueError: If matrices have invalid shapes or contain non-numeric values.
     """
+    # Verificação de None
     if m_a is None or m_b is None:
         raise TypeError("Object arrays are not currently supported")
     
+    # Verificação se são listas
     if not isinstance(m_a, list) or not isinstance(m_b, list):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
-        
-    # Verifica se as dimensões permitem a multiplicação
-    if cols_a != rows_b:
-        raise ValueError(f"shapes ({rows_a},{cols_a}) and ({rows_b},{cols_b}) not aligned: {cols_a} (dim 1) != {rows_b} (dim 0)")
-        
-     # Verifica se todas as linhas têm o mesmo número de colunas
-    if any(len(row) != len(m_a[0]) for row in m_a):
-        raise ValueError("setting an array element with a sequence.")
-
-    if any(len(row) != len(m_b[0]) for row in m_b):
-        raise ValueError("setting an array element with a sequence.")
-        
-    # Obtém as dimensões das matrizes
-    rows_a = len(m_a)
-    cols_a = len(m_a[0]) if rows_a > 0 else 0
-    rows_b = len(m_b)
-    cols_b = len(m_b[0]) if rows_b > 0 else 0
-
-    # Verifica se todas as linhas das matrizes possuem o mesmo número de colunas
-    if any(len(row) != cols_a for row in m_a) or any(len(row) != cols_b for row in m_b):
-        raise TypeError("Each row of the matrices must have the same size")
-        
-    # Verifica se as matrizes são listas de listas e se contêm apenas números
+    
+    # Verificação se são listas de listas
     if not all(isinstance(row, list) for row in m_a) or not all(isinstance(row, list) for row in m_b):
+        raise ValueError("shapes (2,) and (1,2) not aligned: 2 (dim 0) != 1 (dim 0)")
+    
+    # Verificação se as matrizes estão vazias
+    if len(m_a) == 0 or len(m_b) == 0 or any(len(row) == 0 for row in m_a) or any(len(row) == 0 for row in m_b):
+        raise ValueError(f"shapes ({len(m_a)},{len(m_a[0]) if m_a else 0}) and ({len(m_b)},{len(m_b[0]) if m_b else 0}) not aligned: {len(m_a[0]) if m_a else 0} (dim 1) != {len(m_b)} (dim 0)")
+    
+    # Verificação se todos os elementos são inteiros ou floats
+    if not all(all(isinstance(item, (int, float)) for item in row) for row in m_a):
+        raise TypeError("Object arrays are not currently supported")
+    if not all(all(isinstance(item, (int, float)) for item in row) for row in m_b):
         raise TypeError("invalid data type for einsum")
+    
+    # Verificação se todas as linhas têm o mesmo tamanho
+    row_length_a = len(m_a[0])
+    row_length_b = len(m_b[0])
+    if any(len(row) != row_length_a for row in m_a) or any(len(row) != row_length_b for row in m_b):
+        raise ValueError("setting an array element with a sequence.")
+    
+    # Verificação de compatibilidade das dimensões
+    if len(m_a[0]) != len(m_b):
+        raise ValueError(f"shapes ({len(m_a)},{len(m_a[0])}) and ({len(m_b)},{len(m_b[0])}) not aligned: {len(m_a[0])} (dim 1) != {len(m_b)} (dim 0)")
+    
+    # Multiplicação das matrizes
+    return np.matmul(m_a, m_b).tolist()
 
-    if not all(isinstance(num, (int, float)) for row in m_a for num in row) or not all(isinstance(num, (int, float)) for row in m_b for num in row):
-        raise TypeError("invalid data type for einsum")
-        
-
-    return (np.matmul(m_a, m_b))
