@@ -47,7 +47,7 @@ The function also works with floating-point numbers.
     ... ]
     >>> print(lazy_matrix_mul(m_a, m_b))
     [[ 34.69   55.44 ]
-    [-78.61   29.018]]
+     [-78.61   29.018]]
 
 A minimum of two arguments must be provided.
 
