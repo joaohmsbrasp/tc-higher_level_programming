@@ -49,5 +49,5 @@ def lazy_matrix_mul(m_a, m_b):
         raise ValueError(f"shapes ({len(m_a)},{len(m_a[0])}) and ({len(m_b)},{len(m_b[0])}) not aligned: {len(m_a[0])} (dim 1) != {len(m_b)} (dim 0)")
     
     # Multiplicação das matrizes
-    return np.matmul(m_a, m_b).tolist()
+    return np.matmul(m_a, m_b)
 
