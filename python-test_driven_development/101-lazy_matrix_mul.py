@@ -40,5 +40,8 @@ def lazy_matrix_mul(m_a, m_b):
     # Verifica se as dimensões permitem a multiplicação
     if cols_a != rows_b:
         raise ValueError(f"shapes ({rows_a},{cols_a}) and ({rows_b},{cols_b}) not aligned: {cols_a} (dim 1) != {rows_b} (dim 0)")
+        
+    if m_a is None or m_b is None:
+        raise TypeError("Object arrays are not currently supported")
 
     return (np.matmul(m_a, m_b))
