@@ -34,7 +34,7 @@ def lazy_matrix_mul(m_a, m_b):
     
     # Verificação se todos os elementos são inteiros ou floats
     if not all(all(isinstance(item, (int, float)) for item in row) for row in m_a):
-        raise TypeError("Object arrays are not currently supported")
+        raise TypeError("invalid data type for einsum")
     if not all(all(isinstance(item, (int, float)) for item in row) for row in m_b):
         raise TypeError("invalid data type for einsum")
     
