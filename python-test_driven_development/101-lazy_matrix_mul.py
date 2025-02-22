@@ -9,7 +9,9 @@ def lazy_matrix_mul(m_a, m_b):
         m_a (list of lists of ints/floats): The first matrix.
         m_b (list of lists of ints/floats): The second matrix.
     """
-
+    if m_a is None or m_b is None:
+        raise TypeError("Object arrays are not currently supported")
+    
     if not isinstance(m_a, list) or not isinstance(m_b, list):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
         
@@ -41,7 +43,5 @@ def lazy_matrix_mul(m_a, m_b):
     if cols_a != rows_b:
         raise ValueError(f"shapes ({rows_a},{cols_a}) and ({rows_b},{cols_b}) not aligned: {cols_a} (dim 1) != {rows_b} (dim 0)")
         
-    if m_a is None or m_b is None:
-        raise TypeError("Object arrays are not currently supported")
 
     return (np.matmul(m_a, m_b))
