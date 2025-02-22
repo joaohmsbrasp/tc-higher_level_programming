@@ -10,4 +10,6 @@ def lazy_matrix_mul(m_a, m_b):
         m_b (list of lists of ints/floats): The second matrix.
     """
 
+    if not isinstance(m_a, list) or not isinstance(m_b, list):
+        raise ValueError("Scalar operands are not allowed, use '*' instead")
     return (np.matmul(m_a, m_b))
