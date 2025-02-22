@@ -12,4 +12,19 @@ def lazy_matrix_mul(m_a, m_b):
 
     if not isinstance(m_a, list) or not isinstance(m_b, list):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
+        
+    # Obtém as dimensões das matrizes
+    rows_a = len(m_a)
+    cols_a = len(m_a[0]) if rows_a > 0 else 0
+    rows_b = len(m_b)
+    cols_b = len(m_b[0]) if rows_b > 0 else 0
+
+    # Verifica se todas as linhas das matrizes possuem o mesmo número de colunas
+    if any(len(row) != cols_a for row in m_a) or any(len(row) != cols_b for row in m_b):
+        raise TypeError("Each row of the matrices must have the same size")
+
+    # Verifica se as dimensões permitem a multiplicação
+    if cols_a != rows_b:
+        raise ValueError(f"shapes ({rows_a},{cols_a}) and ({rows_b},{cols_b}) not aligned: {cols_a} (dim 1) != {rows_b} (dim 0)")
+
     return (np.matmul(m_a, m_b))
