@@ -15,10 +15,10 @@ def lazy_matrix_mul(m_a, m_b):
         
     # Verifica se as matrizes são listas de listas e se contêm apenas números
     if not all(isinstance(row, list) for row in m_a) or not all(isinstance(row, list) for row in m_b):
-        raise TypeError("m_a and m_b must be lists of lists")
+        raise TypeError("invalid data type for einsum")
 
     if not all(isinstance(num, (int, float)) for row in m_a for num in row) or not all(isinstance(num, (int, float)) for row in m_b for num in row):
-        raise TypeError("m_a and m_b must contain only numbers")
+        raise TypeError("invalid data type for einsum")
         
     # Obtém as dimensões das matrizes
     rows_a = len(m_a)
