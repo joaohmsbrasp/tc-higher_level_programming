@@ -15,6 +15,10 @@ def lazy_matrix_mul(m_a, m_b):
     if not isinstance(m_a, list) or not isinstance(m_b, list):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
         
+    # Verifica se as dimensões permitem a multiplicação
+    if cols_a != rows_b:
+        raise ValueError(f"shapes ({rows_a},{cols_a}) and ({rows_b},{cols_b}) not aligned: {cols_a} (dim 1) != {rows_b} (dim 0)")
+        
      # Verifica se todas as linhas têm o mesmo número de colunas
     if any(len(row) != len(m_a[0]) for row in m_a):
         raise ValueError("setting an array element with a sequence.")
@@ -31,10 +35,6 @@ def lazy_matrix_mul(m_a, m_b):
     # Verifica se todas as linhas das matrizes possuem o mesmo número de colunas
     if any(len(row) != cols_a for row in m_a) or any(len(row) != cols_b for row in m_b):
         raise TypeError("Each row of the matrices must have the same size")
-
-    # Verifica se as dimensões permitem a multiplicação
-    if cols_a != rows_b:
-        raise ValueError(f"shapes ({rows_a},{cols_a}) and ({rows_b},{cols_b}) not aligned: {cols_a} (dim 1) != {rows_b} (dim 0)")
         
     # Verifica se as matrizes são listas de listas e se contêm apenas números
     if not all(isinstance(row, list) for row in m_a) or not all(isinstance(row, list) for row in m_b):
