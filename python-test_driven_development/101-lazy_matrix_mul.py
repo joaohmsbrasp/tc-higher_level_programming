@@ -15,6 +15,13 @@ def lazy_matrix_mul(m_a, m_b):
     if not isinstance(m_a, list) or not isinstance(m_b, list):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
         
+     # Verifica se todas as linhas têm o mesmo número de colunas
+    if any(len(row) != len(m_a[0]) for row in m_a):
+        raise ValueError("setting an array element with a sequence.")
+
+    if any(len(row) != len(m_b[0]) for row in m_b):
+        raise ValueError("setting an array element with a sequence.")
+        
     # Obtém as dimensões das matrizes
     rows_a = len(m_a)
     cols_a = len(m_a[0]) if rows_a > 0 else 0
@@ -32,13 +39,6 @@ def lazy_matrix_mul(m_a, m_b):
     # Verifica se as matrizes são listas de listas e se contêm apenas números
     if not all(isinstance(row, list) for row in m_a) or not all(isinstance(row, list) for row in m_b):
         raise TypeError("invalid data type for einsum")
-        
-    # Verifica se todas as linhas têm o mesmo número de colunas
-    if any(len(row) != len(m_a[0]) for row in m_a):
-        raise ValueError("setting an array element with a sequence.")
-
-    if any(len(row) != len(m_b[0]) for row in m_b):
-        raise ValueError("setting an array element with a sequence.")
 
     if not all(isinstance(num, (int, float)) for row in m_a for num in row) or not all(isinstance(num, (int, float)) for row in m_b for num in row):
         raise TypeError("invalid data type for einsum")
