@@ -154,7 +154,7 @@ And not just any list of lists - they *must* be lists of lists containing intege
 
     >>> print(lazy_matrix_mul([[1, "non-number"]], [[3, 4]]))
     Traceback (most recent call last):
-    TypeError: Object arrays are not currently supported
+    TypeError: invalid data type for einsum
 
 ::
 
