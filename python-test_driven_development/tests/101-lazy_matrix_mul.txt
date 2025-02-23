@@ -146,7 +146,7 @@ Not just any list - they *must* be lists of lists! Otherwise, behavior is undefi
 ::
 
     >>> print(lazy_matrix_mul([1, 2], [3, 4]))
-    11
+    [11]
 
 And not just any list of lists - they *must* be lists of lists containing integers or floats! Otherwise, a ValueError or TypeError is raised
 
@@ -154,7 +154,7 @@ And not just any list of lists - they *must* be lists of lists containing intege
 
     >>> print(lazy_matrix_mul([[1, "non-number"]], [[3, 4]]))
     Traceback (most recent call last):
-    ValueError: shapes (1,2) and (1,2) not aligned: 2 (dim 1) != 1 (dim 0)
+    TypeError: Object arrays are not currently supported
 
 ::
 

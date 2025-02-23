@@ -23,9 +23,14 @@ def lazy_matrix_mul(m_a, m_b):
     # Verificação se são listas
     if not isinstance(m_a, list) or not isinstance(m_b, list):
         raise ValueError("Scalar operands are not allowed, use '*' instead")
-    
-    # Verificação se são listas de listas
-    if not all(isinstance(row, list) for row in m_a) or not all(isinstance(row, list) for row in m_b):
+        
+    if all(isinstance(row, list) for row in m_a) and all(isinstance(row, list) for row in m_b):
+        pass  # São listas de listas, segue o fluxo normal
+    elif all(isinstance(row, (int, float)) for row in m_a) and all(isinstance(row, (int, float)) for row in m_b):
+        return [np.dot(m_a, m_b)]  # Produto escalar caso sejam vetores 1D
+    elif np.ndim(m_a) >= 2 and np.ndim(m_b) == 1:
+        return np.matmul(m_a, m_b)
+    else:
         raise ValueError("shapes (2,) and (1,2) not aligned: 2 (dim 0) != 1 (dim 0)")
     
     # Verificação se as matrizes estão vazias
@@ -34,7 +39,8 @@ def lazy_matrix_mul(m_a, m_b):
     
     # Verificação se todos os elementos são inteiros ou floats
     if not all(all(isinstance(item, (int, float)) for item in row) for row in m_a):
-        raise TypeError("invalid data type for einsum")
+        #raise ValueError(f"shapes ({len(m_a)},{len(m_a[0]) if m_a else 0}) and ({len(m_b)},{len(m_b[0]) if m_b else 0}) not aligned: {len(m_a[0]) if m_a else 0} (dim 1) != {len(m_b)} (dim 0)")  #invalid data type for einsum
+        raise TypeError("Object arrays are not currently supported")
     if not all(all(isinstance(item, (int, float)) for item in row) for row in m_b):
         raise TypeError("invalid data type for einsum")
     
